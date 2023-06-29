@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KanbanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
-Route::get('/dashboard', function () {
-    return view('dashboard');
+
+Route::get('/login', function () {
+    return view('login');
 });
+
+Route::resource("dashboard/kanban", KanbanController::class);

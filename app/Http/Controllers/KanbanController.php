@@ -19,7 +19,7 @@ class KanbanController extends Controller
      */
     public function create()
     {
-        //
+        return view("dashboard.kanban.create");
     }
 
     /**
@@ -27,7 +27,7 @@ class KanbanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

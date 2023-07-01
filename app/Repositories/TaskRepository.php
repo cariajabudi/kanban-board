@@ -41,4 +41,16 @@ class TaskRepository
         $task->save();
         $task->touch();
     }
+
+    public function update_quantity($request, $id)
+    {
+        $validated_data = $request->validate([
+            "current_quantity" => "required",
+        ]);
+
+        $task = Task::find($id);
+        $task->fill($validated_data);
+        $task->save();
+        $task->touch();
+    }
 }

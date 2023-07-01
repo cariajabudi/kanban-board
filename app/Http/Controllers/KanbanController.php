@@ -20,7 +20,7 @@ class KanbanController extends Controller
     {
         return view("kanban.index", [
             "title" => "Kanban App",
-            'tasks' => $this->taskRepository->index()->latest('updated_at')->filter(["status", "search"])->paginate(12),
+            'tasks' => $this->taskRepository->index()->latest('updated_at')->filter(request(["status", "search"]))->paginate(12)->withQueryString(),
         ]);
     }
 
@@ -45,11 +45,7 @@ class KanbanController extends Controller
      */
     public function show(string $id)
     {
-        // Lakukan pengambilan data dari database berdasarkan ID
-        $data = $this->taskRepository->index()->find($id);
-
-        // Return data dalam format JSON
-        return response()->json($data);
+        //
     }
 
     /**
@@ -65,7 +61,9 @@ class KanbanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->taskRepository->update_quantity($request, $id);
+
+        return redirect()->back()->with("update_task_success", "task $request->title has been updated");
     }
 
     /**

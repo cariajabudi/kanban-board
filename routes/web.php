@@ -21,11 +21,10 @@ Route::get('/login', function () {
 
 Route::redirect('/', "/kanban");
 
-Route::prefix("kanban")->group(function () {
-    Route::get("/", [KanbanController::class, "index"]);
-    Route::get("/{id}/edit", [KanbanController::class, "edit"]);
-    Route::get("/{id}", [KanbanController::class, "show"]);
-    Route::post("/{id}", [KanbanController::class, "update"]);
-});
+// Route::prefix("kanban")->group(function () {
+//     Route::get("/", [KanbanController::class, "index"]);
+//     Route::put("/{id}", [KanbanController::class, "update"]);
+// });
 
+Route::resource("kanban", KanbanController::class)->except(["create", "destroy", "edit", "show", "store"]);
 Route::resource("dashboard/kanban", TaskController::class);

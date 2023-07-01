@@ -3,15 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\TaskRepository;
 
 class KanbanController extends Controller
 {
+    private $taskRepository;
+
+    public function __construct(TaskRepository $taskRepository)
+    {
+        $this->taskRepository = $taskRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view("dashboard.kanban.index");
+        return view("kanban.index", [
+            "title" => "Kanban App",
+            'tasks' => $this->taskRepository->index()->latest('updated_at')->filter(["status", "search"])->paginate(12),
+        ]);
     }
 
     /**
@@ -19,7 +29,7 @@ class KanbanController extends Controller
      */
     public function create()
     {
-        return view("dashboard.kanban.create");
+        //
     }
 
     /**
@@ -27,7 +37,7 @@ class KanbanController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        //
     }
 
     /**
@@ -35,7 +45,11 @@ class KanbanController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // Lakukan pengambilan data dari database berdasarkan ID
+        $data = $this->taskRepository->index()->find($id);
+
+        // Return data dalam format JSON
+        return response()->json($data);
     }
 
     /**

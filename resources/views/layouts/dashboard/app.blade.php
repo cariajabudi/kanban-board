@@ -5,17 +5,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <title>Home</title>
+    <title>Dashboard | {{ $title }}</title>
     <script src="https://unpkg.com/feather-icons"></script>
 </head>
 
 <body>
 
-    @include("layouts.dashboard.navbar")
+    @include('layouts.dashboard.navbar')
 
     <div class="max-w-7xl m-auto min-h-screen">
-        
-        @include("layouts.dashboard.aside")
+
+        @include('layouts.dashboard.aside')
 
         <div class="p-4 sm:ml-64">
 
@@ -24,7 +24,7 @@
                 @yield('content')
 
             </div>
-            
+
         </div>
 
     </div>
@@ -33,9 +33,9 @@
     @include('layouts.footer')
 
     <script>
-      feather.replace()
+        feather.replace()
     </script>
-    
+
 </body>
 
 </html>

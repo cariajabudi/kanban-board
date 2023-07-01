@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KanbanController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,12 +15,17 @@ use App\Http\Controllers\KanbanController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-
 Route::get('/login', function () {
     return view('login');
 });
 
-Route::resource("dashboard/kanban", KanbanController::class);
+Route::redirect('/', "/kanban");
+
+Route::prefix("kanban")->group(function () {
+    Route::get("/", [KanbanController::class, "index"]);
+    Route::get("/{id}/edit", [KanbanController::class, "edit"]);
+    Route::get("/{id}", [KanbanController::class, "show"]);
+    Route::post("/{id}", [KanbanController::class, "update"]);
+});
+
+Route::resource("dashboard/kanban", TaskController::class);

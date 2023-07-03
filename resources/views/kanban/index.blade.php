@@ -17,14 +17,37 @@
 
         {{-- tabs start --}}
         <div class="sm:hidden w-9/12 m-auto mb-4">
-            <label for="tabs" class="sr-only">Select your filter</label>
-            <select id="tabs"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option {{ request()->input('status') == '' ? 'selected' : '' }}>All Tasks</option>
-                <option {{ request()->input('status') == '1' ? 'selected' : '' }}>Todo</option>
-                <option {{ request()->input('status') == '2' ? 'selected' : '' }}>Doing</option>
-                <option {{ request()->input('status') == '3' ? 'selected' : '' }}>Done</option>
-            </select>
+
+            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
+                class="w-full justify-between hover:bg-slate-100 ring-2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                type="button">Filter by Status <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg></button>
+            <!-- Dropdown menu -->
+            <div id="dropdown"
+                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow ring-2 w-9/12 dark:bg-gray-700">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                        <a href="{{ url('kanban') }}"
+                            class="block px-4 py-2 {{ request()->input('status') == '' ? 'bg-blue-300' : '' }} hover:bg-blue-400 dark:hover:bg-blue-600 dark:hover:text-white">All
+                            Tasks</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('kanban?status=1') }}"
+                            class="block px-4 py-2 {{ request()->input('status') == 1 ? 'bg-blue-300' : '' }} hover:bg-blue-400 dark:hover:bg-blue-600 dark:hover:text-white">Todo</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('kanban?status=2') }}"
+                            class="block px-4 py-2 {{ request()->input('status') == 2 ? 'bg-blue-300' : '' }} hover:bg-blue-400 dark:hover:bg-blue-600 dark:hover:text-white">Doing</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('kanban?status=3') }}"
+                            class="block px-4 py-2 {{ request()->input('status') == 3 ? 'bg-blue-300' : '' }} hover:bg-blue-400 dark:hover:bg-blue-600 dark:hover:text-white">Done</a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
         <ul
             class="max-w-xl mx-auto hidden text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
@@ -151,7 +174,10 @@
                     </button>
                 </div>
             @empty
-                <h1>Search not found</h1>
+                <div class="min-h-screen">
+                    <p class="mt-2 text-sm font-bold text-red-600 dark:text-red-500">
+                        {{ request()->input('search') }} not found</p>
+                </div>
             @endforelse
 
 
@@ -159,57 +185,60 @@
         {{-- cards end --}}
 
         <!-- Main modal -->
-        @foreach ($tasks as $task)  
-        <div id="modal-{{ $task->id }}" tabindex="-1" aria-hidden="true"
-            class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative w-full max-w-md max-h-full">
-                <!-- Modal content -->
-                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                    <button type="button"
-                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                        data-modal-hide="modal-{{ $task->id }}">
-                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        <span class="sr-only">Close modal</span>
-                    </button>
-                    <div class="px-6 py-6 lg:px-8" id="modal-container">
-                        <h3 id="task-title" class="mb-4 text-xl font-bold text-gray-900 dark:text-white">{{ $task->title }}</h3>
-                        <form class="space-y-6" action="/kanban/{{ $task->id }}" method="POST">
-                            @csrf
-                            @method("PUT")
-                            <input type="hidden" name="title" value="{{ $task->title }}">
-                            <div>
-                                <label for="target_quantity"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Target
-                                    Quantity</label>
-                                <input type="target_quantity" name="target_quantity" id="target-quantity" value="{{ $task->target_quantity }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                    disabled>
-                            </div>
-                            <div>
-                                <label for="current_quantity"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Update Current
-                                    Quantity</label>
-                                <input type="number" name="current_quantity" id="current_quantity"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                    required>
-                                <p id="note-qty" class="mt-2 text-sm font-bold text-slate-600 dark:text-blue-500">Current Quantity = {{ $task->current_quantity }}
-                                </p>
-                            </div>
-                            <button type="submit"
-                                class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update
-                                Current Quantity</button>
-                        </form>
+        @foreach ($tasks as $task)
+            <div id="modal-{{ $task->id }}" tabindex="-1" aria-hidden="true"
+                class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div class="relative w-full max-w-md max-h-full">
+                    <!-- Modal content -->
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <button type="button"
+                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                            data-modal-hide="modal-{{ $task->id }}">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                        <div class="px-6 py-6 lg:px-8" id="modal-container">
+                            <h3 id="task-title" class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+                                {{ $task->title }}</h3>
+                            <form class="space-y-6" action="/kanban/{{ $task->id }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="title" value="{{ $task->title }}">
+                                <div>
+                                    <label for="target_quantity"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Target
+                                        Quantity</label>
+                                    <input type="target_quantity" name="target_quantity" id="target-quantity"
+                                        value="{{ $task->target_quantity }}"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        disabled>
+                                </div>
+                                <div>
+                                    <label for="current_quantity"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Update Current
+                                        Quantity</label>
+                                    <input type="number" name="current_quantity" id="current_quantity"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                    <p id="note-qty" class="mt-2 text-sm font-bold text-slate-600 dark:text-blue-500">
+                                        Current Quantity = {{ $task->current_quantity }}
+                                    </p>
+                                </div>
+                                <button type="submit"
+                                    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update
+                                    Current Quantity</button>
+                            </form>
+                        </div>
+
                     </div>
-
                 </div>
-            </div>
 
-        </div>
+            </div>
         @endforeach
     </div>
 
@@ -217,5 +246,5 @@
         {{ $tasks->links() }}
     </div>
 
-    @include("layouts.footer")
+    @include('layouts.footer')
 @endsection

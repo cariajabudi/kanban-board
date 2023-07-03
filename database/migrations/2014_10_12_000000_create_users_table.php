@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('nik')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->boolean("gender");
             $table->string('password');
             $table->boolean("is_admin")->default(0);
-            $table->rememberToken();
+            $table->integer("job_title")->default(1);
+            $table->string("born_place");
+            $table->dateTime("born_date");
+            $table->string("image")->nullable();
             $table->timestamps();
         });
     }

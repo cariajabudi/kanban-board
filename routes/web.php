@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KanbanController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,11 +21,6 @@ Route::get('/login', function () {
 });
 
 Route::redirect('/', "/kanban");
-
-// Route::prefix("kanban")->group(function () {
-//     Route::get("/", [KanbanController::class, "index"]);
-//     Route::put("/{id}", [KanbanController::class, "update"]);
-// });
-
 Route::resource("kanban", KanbanController::class)->except(["create", "destroy", "edit", "show", "store"]);
 Route::resource("dashboard/kanban", TaskController::class);
+Route::resource("dashboard/user", UserController::class);

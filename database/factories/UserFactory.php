@@ -29,18 +29,33 @@ class UserFactory extends Factory
 
         $this->values = [
             [
-                "name" => "Admin Mimin",
+                "name" => "Admin May",
                 "nik" => "123abc",
+                "gender" => 0,
                 "password" => Hash::make("password"),
                 "is_admin" => 1,
-                "remember_token" => Str::random(10)
+                "job_title" => 4,
+                "born_place" => "Solo",
+                "born_date" => fake()->date("Y-m-d"),
+            ],
+            [
+                "name" => "Admin Woyo",
+                "nik" => "124abc",
+                "gender" => 1,
+                "password" => Hash::make("password"),
+                "is_admin" => 1,
+                "job_title" => 3,
+                "born_place" => "Jakarta",
+                "born_date" => fake()->date("Y-m-d"),
             ],
             [
                 "name" => "Eka Candra",
-                "nik" => "124abc",
+                "nik" => "125abc",
+                "gender" => 1,
                 "password" => Hash::make("password"),
                 "is_admin" => 0,
-                "remember_token" => Str::random(10)
+                "born_place" => "Bandung",
+                "born_date" => fake()->date("Y-m-d"),
             ]
         ];
     }

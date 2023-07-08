@@ -61,6 +61,9 @@ class KanbanController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (!auth()->check()) {
+            return redirect("user/login");
+        }
         $this->taskRepository->update_quantity($request, $id);
 
         return redirect()->back()->with("update_task_success", "task $request->title has been updated");

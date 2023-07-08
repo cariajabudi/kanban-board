@@ -18,7 +18,7 @@ return new class extends Migration
             $table->boolean("gender");
             $table->string('password');
             $table->boolean("is_admin")->default(0);
-            $table->integer("job_title")->default(1);
+            $table->unsignedBigInteger("job_title_id")->default(1);
             $table->string("born_place");
             $table->dateTime("born_date");
             $table->string("image")->nullable();

@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Task;
 use App\Models\TaskStatus;
+use App\Models\JobTitle;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->count(3)->create();
         Task::factory(30)->create();
         TaskStatus::factory()->count(3)->create();
+        JobTitle::factory()->count(4)->create();
 
         // \App\Models\User::factory(10)->create();
 

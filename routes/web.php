@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KanbanController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,11 +17,13 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/login', function () {
-    return view('login');
+Route::prefix('user')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name("login")->middleware("guest");
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware("auth");
 });
 
 Route::redirect('/', "/kanban");
 Route::resource("kanban", KanbanController::class)->except(["create", "destroy", "edit", "show", "store"]);
-Route::resource("dashboard/kanban", TaskController::class);
-Route::resource("dashboard/user", UserController::class);
+Route::resource("dashboard/kanban", TaskController::class)->middleware("admin");
+Route::resource("dashboard/user", UserController::class)->middleware("admin");

@@ -6,7 +6,7 @@
     <div class="max-w-10/12 m-auto">
 
         {{-- Jumbotron start --}}
-        <section class="bg-white dark:bg-gray-900">
+        <section class="dark:bg-gray-900">
             <div class="py-4 px-2 mx-auto max-w-screen-xl text-center">
                 <h1
                     class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">

@@ -30,7 +30,6 @@
                     </option>
                 </select>
             </div>
-
         </div>
         <div class="grid md:grid-cols-2 md:gap-6">
             <div class="relative z-0 w-full mb-6 group">
@@ -55,8 +54,6 @@
                     </p>
                 @enderror
             </div>
-
-
         </div>
         <div class="grid md:grid-cols-2 md:gap-6">
             <div class="relative z-0 w-full mb-6 group">

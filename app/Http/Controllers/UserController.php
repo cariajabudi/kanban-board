@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         return view("dashboard.user.index", [
             "title" => "Users",
-            "users" => $this->userRepository->index()->all(),
+            "users" => $this->userRepository->index()->search()->paginate(10)->withQueryString(),
         ]);
     }
 
@@ -60,7 +60,7 @@ class UserController extends Controller
 
     public function destroy(String $id)
     {
-        $this->userRepository->index()->find($id)->delete();
-        return redirect("dashboard/user")->with("delelte_success", "User has been deleted");
+        $this->userRepository->destroy($id);
+        return redirect("dashboard/user")->with("delete_success", "User has been deleted");
     }
 }

@@ -3,7 +3,6 @@
 @section('content')
     <h3 class="text-3xl font-bold dark:text-white mb-6">Register User</h3>
 
-
     <form method="POST" action="{{ url('dashboard/user') }}" enctype="multipart/form-data">
         @csrf
         <div class="grid md:grid-cols-2 md:gap-6">
@@ -19,14 +18,12 @@
                 @enderror
             </div>
             <div class="relative z-0 w-full mb-6 group">
-
                 <label for="gender" class="sr-only">Gender</label>
                 <select id="gender" name="gender"
                     class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-white border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                     <option value="1">Male</option>
                     <option value="0">Female</option>
                 </select>
-
                 @error('gender')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message }}</span>
                     </p>
@@ -68,7 +65,6 @@
                     <option value="3">Leader</option>
                     <option value="3">Supervisor</option>
                 </select>
-
                 @error('job_title_id')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message }}</span>
                     </p>
@@ -82,7 +78,6 @@
                     <option value="0">Role User</option>
                     <option value="1">Role Admin</option>
                 </select>
-
                 @error('is_admin')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message }}</span>
                     </p>

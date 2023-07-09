@@ -107,12 +107,15 @@
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-1 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Back</a>
         <a href="{{ url("dashboard/user/$user->id/edit") }}"
             class="text-white bg-yellow-300 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-1 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800">Edit</a>
-        <form action="{{ url("dashboard/user/$user->id") }}" method="post" class="inline-block">
+        @if (auth()->user()->name != $user->name)
+             <form action="{{ url("dashboard/user/$user->id") }}" method="post" class="inline-block">
             @csrf
             @method('DELETE')
+            <input type="hidden" name="image" value="{{ $user->image }}">
             <button type="submit" onclick="return confirm('Delete User ?')"
                 class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-1 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">Delete</button>
         </form>
+        @endif
 
     </div>
 @endsection

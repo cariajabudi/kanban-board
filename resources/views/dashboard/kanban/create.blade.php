@@ -3,7 +3,6 @@
 @section('content')
     <h3 class="text-3xl font-bold dark:text-white mb-6">Create Task</h3>
 
-
     <form method="POST" action="{{ url('dashboard/kanban') }}">
         @csrf
         <div class="grid md:grid-cols-2 md:gap-6">

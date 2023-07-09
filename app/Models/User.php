@@ -43,4 +43,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(JobTitle::class);
     }
+
+    public function scopeSearch($query)
+    {
+        return $query->where("name", "LIKE", "%" . request()->input("search") . "%");
+    }
 }

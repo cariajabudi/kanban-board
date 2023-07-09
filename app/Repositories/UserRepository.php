@@ -70,4 +70,12 @@ class UserRepository
         $user->save();
         $user->touch();
     }
+
+    public function destroy($id)
+    {
+        $this->index()->find($id)->delete();
+        if (request()->image) {
+            Storage::delete(request()->image);
+        }
+    }
 }

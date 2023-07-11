@@ -14,9 +14,9 @@
                     </svg>
                 </button>
                 <a href="{{ url('/') }}" class="flex ml-2 md:mr-24">
-                    <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="FlowBite Logo" />
-                    <span
-                        class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Flowbite</span>
+                    <img src="{{ asset('storage/logo/taco.png') }}" class="h-8 mr-3" alt="taco Logo" />
+                    <span class="self-center text-xl font-bold sm:text-2xl whitespace-nowrap dark:text-white">Kanban
+                        Board</span>
                 </a>
             </div>
             <div class="flex items-center">
@@ -26,8 +26,14 @@
                             class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                             aria-expanded="false" data-dropdown-toggle="dropdown-user">
                             <span class="sr-only">Open user menu</span>
-                            <img class="w-8 h-8 rounded-full"
-                                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                            @if (auth()->user()->image)
+                                <img class="h-8 w-8 rounded-full object-cover object-center"
+                                    src="{{ asset('storage/' . auth()->user()->image) }}"
+                                    alt="{{ auth()->user()->name }}">
+                            @else
+                                <img class="h-8 w-8 rounded-full object-cover object-center"
+                                    src="{{ asset('storage/user-images/default-img.png') }}" alt="">
+                            @endif
                         </button>
                     </div>
                     <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
@@ -41,26 +47,28 @@
                             </p>
                         </div>
                         <ul class="py-1" role="none">
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    role="menuitem">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    role="menuitem">Settings</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    role="menuitem">Earnings</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    role="menuitem">Sign out</a>
-                            </li>
+                            @if (auth()->user()->is_admin == 1)
+                                <li>
+                                    <a href="{{ url('dashboard/kanban') }}"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                        role="menuitem">Dashboard</a>
+                                </li>
+                            @endif
+                            @if (!auth()->check())
+                                <li>
+                                    <a href="{{ url('user/login') }}"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                        role="menuitem">Login</a>
+                                </li>
+                            @else
+                                <li>
+                                    <form action="{{ url('user/logout') }}" method="post"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        @csrf
+                                        <button>Logout</button>
+                                    </form>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>

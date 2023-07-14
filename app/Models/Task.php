@@ -14,7 +14,8 @@ class Task extends Model
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters["search"] ?? false, function ($query, $search) {
-            return $query->where("title", "LIKE", "%" . $search . "%");
+            return $query->where("title", "LIKE", "%" . $search . "%")
+                ->orWhere("assigned", "LIKE", "%" . $search . "%");
         });
 
         $query->when($filters["status"] ?? false, function ($query, $status) {

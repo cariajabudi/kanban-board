@@ -5,7 +5,7 @@ $currentUrl = request()->path();
 <nav class="bg-white border-gray-200 dark:bg-gray-900 border border-b-2">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="{{ url('/') }}" class="flex items-center">
-            <img src="{{ asset('storage/logo/taco.png') }}" class="h-8 mr-3" alt="Flowbite Logo" />
+            <img src="{{ asset('storage/logo/taco.png') }}" class="h-8 mr-3" alt="taco Logo" />
         </a>
         <div class="flex md:order-2">
             @if (auth()->check())

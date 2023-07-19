@@ -144,7 +144,11 @@
                         Deadline
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        <span class="sr-only">Edit</span>
+                        @if (request()->input('status') == 3)
+                            <a target="_blank" href="{{ url('dashboard/print') }}" class="flex justify-end items-center">
+                                <span class="text-blue-500">Print</span>
+                            </a>
+                        @endif
                     </th>
                 </tr>
             </thead>

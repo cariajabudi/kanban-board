@@ -19,7 +19,7 @@ class KanbanController extends Controller
     public function index()
     {
         return view("kanban.index", [
-            "title" => "Kanban App",
+            "title" => "Home",
             'tasks' => $this->taskRepository->index()->latest('updated_at')->filter(request(["status", "search"]))->paginate(12)->withQueryString(),
         ]);
     }

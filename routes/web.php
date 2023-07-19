@@ -5,6 +5,7 @@ use App\Http\Controllers\KanbanController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Models\Task;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,10 @@ Route::redirect('/', "/kanban");
 Route::resource("kanban", KanbanController::class)->except(["create", "destroy", "edit", "show", "store"]);
 Route::resource("dashboard/kanban", TaskController::class)->middleware("admin");
 Route::resource("dashboard/user", UserController::class)->middleware("admin");
+
+Route::get("dashboard/print", function () {
+    return view("dashboard.raport.index", [
+        "title" => "Print",
+        "tasks" => Task::where("task_status_id", 3)->get()
+    ]);
+});

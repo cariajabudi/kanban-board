@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="relative overflow-x-auto max-w-5xl m-auto">
-
+    <div class="relative overflow-x-auto max-w-5xl m-auto min-h-[80vh]">
 
         <section class="bg-white dark:bg-gray-900 flex items-center pt-5">
 
@@ -67,7 +66,17 @@
         </table>
     </div>
 
-    <script type="text/javascript">
+    <div class="max-w-5xl mt-5 m-auto flex justify-end">
+        <div class="note">
+            <p>Cikande, {{ date('d-M-Y') }}</p>
+
+            @if (auth()->check())
+                <p class="mt-16">{{ auth()->user()->name }}</p>
+            @endif
+        </div>
+    </div>
+
+    {{-- <script type="text/javascript">
         window.print()
-    </script>
+    </script> --}}
 @endsection

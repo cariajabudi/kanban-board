@@ -8,7 +8,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $file = file_get_contents(base_path("./database/user.json"));
-        $data = json_decode($file);
+        $data = json_decode($file, true);
 
         User::insert($data);
     }

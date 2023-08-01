@@ -5,21 +5,21 @@
         <ul class="space-y-2 font-medium">
             <li>
                 <a href="{{ url('dashboard/kanban') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white {{ request()->path() == 'dashboard/kanban' ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
                     <i data-feather="grid"></i>
                     <span class="flex-1 ml-3 whitespace-nowrap">Kanban</span>
                 </a>
             </li>
             <li>
                 <a href="{{ url('dashboard/user') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white {{ request()->path() == 'dashboard/user' ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
                     <i data-feather="users"></i>
                     <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
                 </a>
             </li>
             <li>
                 <button type="button"
-                    class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                    class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group dark:text-white hover:bg-gray-100  dark:hover:bg-gray-700"
                     aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
                     <i data-feather="plus"></i>
                     <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Add</span>

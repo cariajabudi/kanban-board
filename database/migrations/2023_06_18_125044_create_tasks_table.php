@@ -19,8 +19,8 @@ return new class extends Migration
             $table->integer("target_quantity")->default(0);
             $table->integer("current_quantity")->default(0);
             $table->integer("progress")->default(0);
-            $table->dateTime("deadline")->default(Carbon::now()->addWeek());
-            $table->text("description");
+            $table->dateTime("deadline")->default(Carbon::now()->addDays(rand(3, 10))->format('Y-m-d'));
+            $table->text("description")->default("Mohon dikerjakan sesuai target dan selesaikan sebelum deadline");
             $table->unsignedBigInteger("task_status_id")->default(1);
             $table->timestamps();
         });

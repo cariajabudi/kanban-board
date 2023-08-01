@@ -81,7 +81,8 @@
                 <label for="is_admin" class="sr-only">Role</label>
                 <select id="is_admin" name="is_admin"
                     class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-white border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                    <option {{ old('is_admin') == 0 || $user->is_admin == 0 ? 'selected' : '' }} value="0">Role User
+                    <option {{ old('is_admin') == 0 || $user->is_admin == 0 ? 'selected' : '' }} value="0">Role
+                        Karyawan
                     </option>
                     <option {{ old('is_admin') == 1 || $user->is_admin == 1 ? 'selected' : '' }} value="1">Role Admin
                     </option>

@@ -16,10 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->count(3)->create();
-        Task::factory(30)->create();
+        User::factory()->count(4)->create();
+        // Task::factory(30)->create();
         TaskStatus::factory()->count(3)->create();
         JobTitle::factory()->count(4)->create();
+        $this->call(TaskSeeder::class);
 
         // \App\Models\User::factory(10)->create();
 

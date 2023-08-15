@@ -35,3 +35,9 @@ Route::get("dashboard/print", function () {
         "tasks" => Task::where("task_status_id", 3)->get()
     ]);
 });
+
+Route::get("storage-link", function () {
+    $targetFolder = base_path() . 'storage/app/public';
+    $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
+    symlink($targetFolder, $linkFolder);
+});
